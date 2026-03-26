@@ -1,0 +1,2213 @@
+[Music]
+
+is from two lovely gentlemen Dave and
+
+Leif in the Far plan you might have seen
+
+Moe but that changed so we have this
+
+talk by David Stanton and Leif and the
+
+title is introduction to mixed networks
+
+and cuts and posts and this is about a
+
+new and the new movement and how - yeah
+
+how mix networks actually work I have no
+
+clue so I'm thrilled hopefully you are
+
+as well and here are Leif and Dave okay
+
+I'm gonna give a brief introduction
+
+David has a lot to say about mix nets
+
+I'm gonna talk more generally about
+
+anonymous communication first to sort of
+
+give some context and the first question
+
+I want to ask and answer is what does a
+
+what does the word anonymous really mean
+
+if we look at Wiktionary of course the
+
+good source of truth here it shows us
+
+that anonymous means without a name and
+
+has a few different definitions there
+
+none of these really apply to privacy
+
+enhancing technologies anonymous
+
+communication technologies the closest
+
+thing in this definition is actually
+
+about Wikipedia which is it says
+
+anonymous contributors of Wikipedia so
+
+that it's on Wikipedia that are not
+
+logged in are often called anonymous
+
+edits now they call them IP edits which
+
+is more accurate but a lot of people
+
+still call them anonymous edits and
+
+those edits are much worse for privacy
+
+in a lot of regards than if you were to
+
+log into Wikipedia you could have
+
+multiple pseudonyms and if you do that
+
+then your edits are not linkable to each
+
+other I'll talk more about in a moment
+
+um so Oh wrong computer this is an
+
+interesting project you can find on
+
+github
+
+at github.com /e d su / an on the tracks
+
+so-called anonymous edits on Wikipedia
+
+and identifies who's doing them and
+
+there's a thing called Congress edits
+
+which showed that it's made by people in
+
+the US Congress and lots of other places
+
+as well so if let's see so when people
+
+talk about anonymity in the context of
+
+privacy enhancing technologies they're
+
+really usually talking about unlink
+
+ability in some form which is a lot more
+
+precise but still too vague because it
+
+doesn't define what is unlikable to WHO
+
+in the literature you can find a lot of
+
+more specific concepts like a sender
+
+anonymity receiver anonymity location
+
+and anima teather party anonymity these
+
+are all about preventing people from
+
+linking who is talking to who or who
+
+sent a message then there's some more
+
+interesting properties like sender
+
+unobservable 'ti and receiver
+
+unobservable 'ti which is to avoid
+
+having somebody be able to observe that
+
+a user has sent a message at all
+
+regardless of who it's - all of these
+
+are about making event son linkable from
+
+the perspective of some adversaries with
+
+specific capabilities so we talked about
+
+those capabilities in threat models and
+
+threat model should define adversary
+
+capabilities and say what what a given
+
+tool is trying to protect against
+
+sometimes they're not well-defined and
+
+sometimes they are very well defined but
+
+they're not well understood by the users
+
+that rely on the software I think when
+
+looking at threat models it's useful to
+
+invert them instead of thinking about
+
+the adversaries that it is protecting
+
+against consider the ones that it
+
+doesn't protect against so if you have
+
+an example if somebody is editing
+
+Wikipedia they post a
+
+and that somebody doesn't like who can
+
+tell who can link that edit to another
+
+edit that the user has made or link it
+
+to an IP address there's a couple
+
+different adversaries that clearly can
+
+there's the operators of Wikipedia and
+
+there is people who are able to observe
+
+the users traffic to the site Wikipedia
+
+is encrypted of course but if somebody
+
+at your ISP or say say you make is edit
+
+from work and it's about your company
+
+and they're looking at the does edit
+
+they don't like it they wonder if
+
+somebody the company did it they
+
+couldn't see who if they have NetFlow
+
+data that records the all the TCP
+
+connections they can see who who sent
+
+that amount of data to Wikipedia at that
+
+time and they can clearly say this user
+
+probably made that edit so those are
+
+those are two very different adversaries
+
+the site admin and anybody able to
+
+observe the user can do that because
+
+they can see the other end as well
+
+because that's public if you're making a
+
+public post also anybody who could
+
+compromise one of those two groups the
+
+site admins or somebody can observe the
+
+user so most well-known inanimate etool
+
+today is tor which I'm sure everybody
+
+here has probably heard of there's
+
+pictures like this that show how tor
+
+works there's actually layers of
+
+encryption on each of those green lines
+
+so David made another picture here that
+
+shows the layers of encryption the so
+
+you you pick a path through the Tor
+
+network and you connect to the first top
+
+there the entry guard and extend to the
+
+middle and extend to the exit and the
+
+middle can only see the traffic's coming
+
+from the entry and going to the exit it
+
+doesn't know the the client or the
+
+destination and likewise the entry guard
+
+knows about the client in the middle but
+
+not the exit or the destination so
+
+towards threat model is somewhat well
+
+known is there 2004 USENIX paper oops
+
+yeah this is the first paragraph of the
+
+Tor threat model
+
+which says that a global passive
+
+adversary is the most commonly assumed
+
+threat when analyzing theoretical and
+
+enmity designs which at the time this
+
+was written mixed knits were something
+
+that we're being researched a lot and
+
+the the Tor network was very new then
+
+and they say instead of trying to
+
+protect against that where we're going
+
+to try to achieve more by having a lower
+
+latency system we'll talk about the
+
+properties of mixed Nets and why they
+
+why they made these these trade-offs a
+
+global passive adversary at the time was
+
+considered to be pretty unlikely it was
+
+kind of a theoretical thing of course
+
+today we know that there are entities
+
+that observe all traffic passing by lots
+
+of different points on around the world
+
+and they're not even just passive they
+
+do active attacks as well and
+
+unfortunately there isn't a general
+
+purpose anonymity system that's designed
+
+to protect against those sort of
+
+adversaries still today but even worse
+
+than that there's much weaker
+
+adversaries they can also often do what
+
+tor is trying to prevent them from doing
+
+the the second paragraph of the threat
+
+model explains that actually it's not
+
+just global passive adversaries but
+
+people who can just see both ends of the
+
+connection they could confirm that
+
+that's happening in the case of like
+
+posting a public message that's and
+
+everybody can see one end of the
+
+connection you can see when a blog
+
+comment was posted or when a wikipedia
+
+and it was made or so on so going back
+
+to the example earlier with those two
+
+different adversaries the site admins or
+
+somebody who's monitoring your traffic
+
+like your ISP or somebody on the Wi-Fi
+
+your employer at university they could
+
+actually in some scenarios still tell
+
+who made that comment on a blog even if
+
+you're using tor even if they don't
+
+observe anything except for your
+
+connection if you have a local adversary
+
+at your university of your employer so
+
+that's not that's not great so am i
+
+saying like we shouldn't use tor Oh
+
+actually there was supposed to be
+
+another slide in here that said why use
+
+tor and
+
+I've got a lot of reasons why I still
+
+use tor even though it's not got the
+
+strongest threat model and I recommend
+
+people use it for lots of things
+
+the reasons are they did it provides a
+
+location in anima T from sites if they
+
+aren't observing your network connection
+
+it provides some browsing privacy from
+
+adversaries that do observe your local
+
+connection if they aren't observing the
+
+site's a single hop VPN could do both
+
+those things but it's much weaker
+
+because the anonymity said is much
+
+smaller and the the VPN is a single
+
+point of failure it could be observed
+
+and see all of your source and
+
+destinations link them all together
+
+regardless of where you travel to so
+
+linked or is it's not able to defend
+
+against somebody that sees both ends of
+
+the connection but it is a lot better
+
+than any other alternative for a general
+
+purpose anonymity system the tor browser
+
+also has some great anti tracking
+
+features and there's hidden services
+
+towards great I don't want to sound like
+
+I'm saying otherwise it's just we'd like
+
+to have something stronger
+
+and so that's mix networks mix networks
+
+were proposed I think maybe in 1979 even
+
+the paper about it came out in 1981 this
+
+is the first paragraph of David Tom's
+
+paper untraceable electronic mail return
+
+addresses and digital pseudonyms from
+
+1981 so how do mix nets work they're
+
+kind of like tor they have the layers of
+
+encryption but there's a big difference
+
+which is that they are reordering the
+
+messages all the messages are fixed
+
+sized so we have four messages they're
+
+going into a mix inside the mix we don't
+
+see what happens for an external
+
+observer there's a layer of encryption
+
+that's removed and new messages come out
+
+in a different order that are bitwise
+
+done linkable from the inputs the mix of
+
+course can link them so you actually
+
+want to have more than one mix you could
+
+think about the whole mix network as a
+
+single mix logically though so messages
+
+go in and as
+
+and you can't explain that so I guess
+
+I'm gonna turn it over to David here
+
+[Music]
+
+okay so Leif mentioned the threshold
+
+mixed strategy I didn't actually know
+
+well the threshold mixed strategy say we
+
+have a threshold set before this so this
+
+mix wouldn't send any messages until
+
+accumulated four messages and so that
+
+means that these output messages have a
+
+25% chance of being linked with one of
+
+the input messages which is a pretty
+
+weak security margin so if we were going
+
+to use this in a public deployment in
+
+the real world scenario we would want to
+
+set the threshold to like 10,000 or
+
+million we can also use what are called
+
+continuous time mixed strategies which
+
+don't have concrete
+
+bounding on the anonymity set size for
+
+example we're gonna talk about captain
+
+post he uses the Poisson mix strategy
+
+which was first published in the loop
+
+picks paper and it's continuous time mix
+
+so messages come in and out of the mix
+
+at random times and users set the delay
+
+to a random delay so continuous time
+
+mixed strategies you in this case would
+
+well I mean so let's let's let's talk
+
+about the architecture you have to get
+
+the public key material of all the mixes
+
+to be able to send a nested encrypted
+
+packet through the mix network so mixed
+
+minion Oh which was a project before tor
+
+project they they used the pool mix and
+
+they had a PKI system similar to torso
+
+Katzen post uses a directory authority
+
+system similar to tor and mix minion but
+
+we plan in the future to to improve its
+
+design right now it's not Byzantine
+
+fault tolerant but it is slightly
+
+decentralized in its voting protocol so
+
+once clients gain access to all the
+
+connectivity information all the key
+
+material they can send these nested
+
+encrypted packets through the mix
+
+network okay so this is a great paper
+
+that discusses and
+
+strategies so there's many different
+
+trade-offs for mik strategies there's
+
+performance and anonymity trade-offs and
+
+this paper takes a functional look at
+
+the different trade-offs for various mix
+
+strategies but one thing they all have
+
+in common is they all add latency and so
+
+the tour whereas tour tries to route met
+
+messages through the network as quickly
+
+as possible and actually may that might
+
+not be the most accurate way to say it
+
+because tour actually routes cells which
+
+are pieces of a stream so so I want to
+
+discuss some attacks and some defenses
+
+and we have a lot to cover and I thought
+
+I would do it by talking real fast
+
+that's kind of a talking strategy to get
+
+all the information in here so but most
+
+of the attacks we're going to talk today
+
+are about all communication networks
+
+they don't just apply to mix networks
+
+all these attacks applied to tor and
+
+other and in enmity systems as well so
+
+it's it's it's pretty useful but this n
+
+minus-1 attack is really specific to mix
+
+networks and to briefly describe it if
+
+we have this threshold mix and the
+
+adversary si controls some routers
+
+upstream or downstream but they don't
+
+control the mix itself if they see the
+
+target message enter the mix they can
+
+always just send their own messages into
+
+the mix and make sure it hits its
+
+threshold so the messages are shuffled
+
+and sent out and they know what their
+
+own messages will look like coming out
+
+but so the one message they don't they
+
+don't recognize this obviously the
+
+target message so they've just traced
+
+the message through one hop through the
+
+network and this attack would have to be
+
+repeated through all the hops and the
+
+route in order to completely compromised
+
+the unlinking between sender and
+
+receiver so that's one one example of an
+
+attack and it's called an n minus one
+
+attack but there's many variations on
+
+this attack and this is a pretty good
+
+paper to read to get a kind of overview
+
+on how to apply it to different types of
+
+mixed strategies so on your Patronus may
+
+not be behind the Olympics and in MIDI
+
+system Katzen post is based on a lot of
+
+the design from her paper so which
+
+includes the Poisson mixed strategy this
+
+this idea that we can make decoy traffic
+
+trade-off with latency so we can make
+
+the latency a bit lower if we're willing
+
+to exchange some bandwidth overhead and
+
+send decoy messages but there's a good
+
+interrupt for a moment something that I
+
+neglected to say here was it the
+
+original mix net projects that were
+
+deployed in the late 90s early 2000s had
+
+extremely high latency Xand were sending
+
+email only which made them not very
+
+useful and thus not a very big anonymity
+
+set and the Renaissance of mix net
+
+research in the last decade or so maybe
+
+a little more than a decade has sort of
+
+arrived at thinking that maybe we could
+
+actually have much lower latency while
+
+still having very strong anonymity so
+
+that's a where where the work is today
+
+yeah did you want to mention the
+
+anonymity trilemma
+
+i think you have that later but yeah
+
+there's a there's this paper about the
+
+the anonymity trilemma which there's a
+
+big oversimplification of it says
+
+there's three things you'd like really
+
+strong in a mini low latency and low
+
+bandwidth overhead and tor is kind of on
+
+the low bandwidth overhead low latency
+
+side so the anonymity is not as strong
+
+and the new thinking is that you could
+
+have a bit more bandwidth overhead of
+
+sending a lot of cover traffic and have
+
+reasonably low latency still with much
+
+stronger anonymity yeah so the - so in
+
+in the Olympics model we let's see let's
+
+not talk about n minus-1 attacks for Poe
+
+sonic strategy in this talk so there's
+
+various types of Cascade various types
+
+of topologies for mixed nets and David
+
+Toms first paper published in 1981
+
+covers this cascade topology but one
+
+interesting thing difference between tor
+
+and mix Nets is tor has to have lots of
+
+relays and you have to have many a big
+
+route permutation space right because
+
+you want route unpredictability so that
+
+your adversaries can't predict your
+
+route and for mixed nuts we just don't
+
+need route unpredictability
+
+everyone could be routing through the
+
+same four hops and it would work fine
+
+except it wouldn't scale so you need
+
+more so it can scale but if there's four
+
+hops you could still provide
+
+strong yen and Rudy for however many
+
+users they have capacity for yeah so it
+
+doesn't scale it doesn't have high
+
+availability and so 10 years ago or so
+
+people thought that free route was a
+
+good alternative to cascade because you
+
+at least have high availability if one
+
+of these notes in the network it has an
+
+outage you can route around it the free
+
+route is a topology where any you can
+
+make a path that goes from any relay to
+
+any other relay you can completely pick
+
+your path freely and it's free route
+
+yeah so one of one so one of the
+
+downsides is that actually if alice is
+
+sending message to Bob and and Bob is
+
+sending message to Alice and using the
+
+same three relays but in a different
+
+order if the message is they're going to
+
+intersect on one of these mixes and when
+
+they do the source of the message will
+
+be a distinguishing characteristic so
+
+the message won't actually be mixed but
+
+what we mean to say is that the
+
+anonymity sets on the mixes will be
+
+split and there'll be smaller sets so
+
+smaller security margin and the so these
+
+academics came up with the stratified
+
+topology also known as the layered
+
+topology and so here we have a diagram
+
+with three layers layer one layer two
+
+layer three and they can only send to
+
+the next layer to the right and in the
+
+end captain post and in lieu picks we
+
+have providers at the beginning and end
+
+of the route providers are a superset of
+
+a mix they allows message queuing for
+
+later retrieval and network services
+
+that you can interact with and so but
+
+there's there's other approaches as well
+
+if you think about it if there was a
+
+compromised mix on each each of these
+
+layers then the more messages you send
+
+you would you would choose a new route
+
+for every message you send and so you
+
+would be increasing the probability of
+
+eventually choosing a bad route so in
+
+our threat model a bad route is defined
+
+to be a route in which every mix in your
+
+entire route is compromised then it's
+
+game over right so if we have one honest
+
+mix in your route you still have this
+
+unlinking property between input and
+
+output messages so if
+
+we could instead another approach to
+
+dealing with that sort of compulsion
+
+attack threat model is to is to have
+
+various cascades be distributed by the
+
+PGI so clients can choose whichever one
+
+they want so when you allow clients to
+
+choose routes though you you need to
+
+make them not distinguishable
+
+characteristic for that one client
+
+otherwise there could be fingerprinting
+
+attacks so this is why a gossip protocol
+
+is probably not good to distribute
+
+information about the network this is
+
+why we have a PCI that distributes the
+
+consensus document that covers the
+
+entire network to all the users so that
+
+everybody has uniform knowledge about
+
+the current state of the network and one
+
+users choices about their path selection
+
+will be indistinguishable from other
+
+users yeah and this not only applies to
+
+mixed Nets but it applies to tour and
+
+i2p and all anonymous communication
+
+systems have the potential to have route
+
+fingerprinting attacks which we would
+
+like to avoid but I feel like the most
+
+important attack category that that we
+
+want to protect against is statistical
+
+disclosure attacks and all types of
+
+discos statistical disclosure attacks
+
+are important to have some defense
+
+against but mainly we are trying to
+
+provide partial defense against long
+
+term intersection attacks so we can
+
+extract away the entire mixed network as
+
+if it's a single mix a single router
+
+where there's some input messages and
+
+some output messages so if for example
+
+Alice 1 goes offline Bob 1 and two might
+
+be observed to receive 20% fewer
+
+messages so if that's the case it's it's
+
+now obvious that some metadata was
+
+leaked right Alice one was previously
+
+sending the messages when she was online
+
+so this statistical disclosure attack
+
+applies to all communication systems and
+
+so all our communication systems leak
+
+some amount of metadata an expanded
+
+version of this diagram is this
+
+so if clients are receiving messages
+
+directly from the mix network then a
+
+passive adversary on the right the
+
+vertical line represents a part of the
+
+network they're viewing right they can
+
+see all the clients send messages into
+
+the network and all the messages come
+
+out and they can
+
+make these long term statistical just
+
+predictions or sort of assumptions about
+
+which client is talking to who and
+
+however if we replace the edge of the
+
+network with providers that have many
+
+queues for each client then this status
+
+quo information that's leaking here on
+
+the right is a lot less specific about
+
+which client so if each provider has say
+
+10,000 message queues for like 10,000
+
+other users then then this would be
+
+leaking a lot less information
+
+so captain post also has clients
+
+retrieve messages later from providers
+
+and they use a traffic padded protocol
+
+to do so so each of these clients
+
+receives the same amount of information
+
+jean-paul in this example he has one
+
+message in his queue and it's
+
+indistinguishable from the other
+
+messages from the other retrievals so so
+
+that's a little bit about statistical
+
+disclosure taxes were actually a lot of
+
+literature about it and so we use this
+
+Fink's packet format it's specifically
+
+designed for decryption mixed networks
+
+but it has also been used in the design
+
+of low latency systems like Hornet
+
+so Fink's was designed as a drop-in
+
+replacement for the packet format and
+
+mix minion and never was deployed as
+
+such we have a slightly modern version
+
+of it and Katzen post where we use newer
+
+cryptographic primitives and I don't
+
+have time to talk about all the details
+
+but basically since we don't have an
+
+interactive bi-directional communication
+
+channel we're using these Fink's packets
+
+that are being transformed as they
+
+traverse the network they we don't have
+
+forward secrecy properties so we are
+
+more vulnerable to compulsion attacks
+
+actually this is interesting because tor
+
+is in this one particular threat model
+
+tor is a bit safer than mix networks so
+
+when we talk about overlay networks we
+
+usually refer to the wire protocol that
+
+you're actually talking to the machines
+
+over as a link layer right this is
+
+connecting
+
+the clients the mixes in the mixes to
+
+the other mixes and in tour they use TLS
+
+and in our mix Network we use a noise
+
+based cryptographic protocol and if we
+
+just ignore that we have this
+
+cryptographic link layer for a minute if
+
+you were to grab some tor cypher text
+
+from like an nth or handshake and you
+
+wanted to get the police to compel
+
+legally compel a tor relay operator to
+
+decrypt it so you can find out where the
+
+next hop is if you were to try to do
+
+that with tor it would be difficult to
+
+make such an attack successful since you
+
+have these ephemeral keys being
+
+destroyed every few minutes by every hop
+
+in in the circuit and in mixed networks
+
+there is some opportunity to perform
+
+these attacks with legal action police
+
+raids or just compromising the mix to
+
+clarify a little bit of what the
+
+compulsion attack here is is possible
+
+because mixes have to use a fixed key
+
+you don't set up a session like in tour
+
+where you create a stream you extend to
+
+you chop so before you actually send
+
+your request through tor your HTTP
+
+request or whatever you're sending your
+
+is doing a ephemeral difficult in with
+
+each of the intermediate hops you have
+
+key material that can be thrown away at
+
+the end of that stream or that circuit
+
+and in mixed networks you don't have
+
+this state it's each message is an
+
+independent thing so you can't throw
+
+those keys away because you learned them
+
+and you you have to use the keys that
+
+are the current key so instead the keys
+
+are rotated out some key rotation
+
+interval and during that interval this
+
+compulsion attack is possible where
+
+somebody could go through find a message
+
+they want to do naanum eyes and ask each
+
+ops a or tell them tell each op you have
+
+to decrypt this or will kill you or
+
+something so that's the solution here a
+
+sure is the main defense we have in 2002
+
+Georg published a paper forward secure
+
+mixes where the you can interact with
+
+the specific mix key which is destroyed
+
+immediately after your packet traverses
+
+that route however you're leaking extra
+
+metadata to that mix so you're saying
+
+I'm the same entity as last time that
+
+interacted with you and now I'm doing it
+
+again and you're
+
+destroying the key for me thanks so this
+
+is kind of a trade-off because on the
+
+one hand you're leaking extra metadata
+
+to this one mix on the other hand it
+
+destroys the key sooner in Katzen post
+
+currently with the key rotation
+
+schedules to set to three hours but we
+
+plan to soon set it to much lower maybe
+
+under an hour
+
+and so this is our main defense is key
+
+erasure and there are other partial
+
+defenses against compulsion attacks
+
+here's another paper about it that's
+
+pretty interesting it's got deniable
+
+routing multipath routing steps and and
+
+things like that so I don't want to go
+
+into into any detail about these but I
+
+just want to mention that there are
+
+other avenues of thought regarding mixed
+
+net design and so Amir Hertzberg is one
+
+of the authors of these two papers and
+
+they have a different kind of strategy I
+
+mentioned the multi cascade topology
+
+before and so it's it's somewhat related
+
+to the compulsion attack in in the sense
+
+that like I mentioned before if you send
+
+your messages through the Mex network
+
+with a new route with for each hop you
+
+don't want to necessarily increase the
+
+probability of choosing a bad route so
+
+you could use one route for a while and
+
+then switch your route and make so rmx
+
+networks an overlay network and so what
+
+we mean by that is we're using we're
+
+using IP right we're using ipv4 we're
+
+using TCP and we're sent we're adding
+
+some protocol layers on top of that so
+
+we can have a custom automatic repeat
+
+request error correction scheme to
+
+retransmit messages if they get lost in
+
+the mix Network and things things like
+
+that and so Trevor Perrin helped us a
+
+bit yawning angel designed the our wire
+
+protocol it's based on the noise
+
+cryptographic protocol framework peter
+
+suavo also was very helpful in
+
+communicating about new hope' simple and
+
+khyber and was involved in creating the
+
+post quantum key encapsulation
+
+mechanisms that we use
+
+we have a post quantum cryptographic
+
+link layer which i think is pretty cool
+
+thanks to Yanni angel and these other
+
+people and so so this is the anonymity
+
+trilemma we mentioned before there's
+
+this trade-off inherent trade-off
+
+between latency bandwidth and the
+
+strength of anonymity that is offered by
+
+the system so in in the I just want to
+
+mention the in the Katzen post or in the
+
+loop it's design in general using these
+
+Poisson mix strategy on the mixes
+
+clients aggregate several Poisson
+
+processes at the inn and they send out
+
+traffic which has legitimate traffic
+
+mixed with decode messages and the
+
+reason they do this is so that you can
+
+you can tune the mix network by
+
+modifying parameters in RPI so it's just
+
+your booted to all the clients and the
+
+clients can set their their traffic to
+
+these parameters and then everyone's
+
+traffic more or less looks the same and
+
+there's a kind of trade-off between how
+
+much decoy traffic is sent and and how
+
+much latency is there and then the
+
+strength of the anonymity so it so the
+
+tuning problem is so here's an example
+
+of the drop message Alice chooses a
+
+random provider in the network to send
+
+it to and the provider sees that it's a
+
+drop message so it drops it so it's not
+
+fooling an adversary that's on the
+
+destination provider it's it's only
+
+indistinguishable to a passive adversary
+
+watching the network and in this case or
+
+so and here's a loop message so a loop
+
+message in Katzen post is sent to this
+
+loop service on the destination provider
+
+and Alice uses this single single-use
+
+reply block it's a mechanism within the
+
+packet format that allows anonymous
+
+replies so the reply sent to Alice
+
+without the provider knowing Alice's
+
+location on the network I think maybe a
+
+little more should be said on this slide
+
+here of the single-use reply block the
+
+light blue line there the reply that's a
+
+route that alice has chosen and sent
+
+that to the provider at the bottom left
+
+so they can't see what the return route
+
+will be Alice picked that and gave them
+
+this serve a single-use reply block
+
+which is sort of like a self-addressed
+
+stamped envelope that says hey this is
+
+how you reply to me and so this this is
+
+the mechanism for anonymous replies but
+
+these are only good for the duration of
+
+the key rotation interval which is this
+
+trade-off about how long you have to do
+
+a compulsion attack so Serbs are in
+
+older mix net designs are actually used
+
+for human replies but in our current
+
+design
+
+it's a they're they're more for
+
+automatic replies from services where
+
+you're not gonna use the Serbs reply the
+
+next day it's going to be used soon
+
+within the same key rotation interval
+
+right I should also that also reminds me
+
+what leaves that is since we're using
+
+serbs with the poisson mix strategy the
+
+client actually Ellis in this case
+
+chooses the delays all the forward
+
+delays and all the reply delays and so
+
+she actually knows the the rough
+
+estimate of the round-trip time or
+
+fairly accurate unless there's
+
+computational overhead they each hop or
+
+so but she knows the artificial delay
+
+placed by each mix for the round-trip
+
+which is helpful so that if she doesn't
+
+get the reply she knows it was lost in
+
+the network and so so there's Litzy
+
+drops loops and lambda p could be a
+
+forward message or perhaps the loop if
+
+the queue is empty or so in here we have
+
+another diagram where alice's is
+
+retrieving a message from from a
+
+rendezvous provider so instead of
+
+rendezvous on the provider you directly
+
+connect to you want to exchange messages
+
+using somewhere else on the network
+
+because you want some unlink ability
+
+property you want to retrieve your
+
+messages using the mixed network as as
+
+communication transport to retrieve the
+
+messages so I mean it's a fairly simple
+
+design and it's different than the loop
+
+expand the loop picks paper is not
+
+actually presenting us with an anonymous
+
+communication system in the sense that
+
+leaf is talking about where we have
+
+location hiding properties here we in
+
+the sense want a kind of mutual distrust
+
+property where if if Alice and Bob are
+
+talking to each other and if Alice has
+
+she shouldn't learn bops location on the
+
+network or if the adversary compromising
+
+Alice shouldn't learn pops location and
+
+so they use they can use these
+
+intermediaries what I wanted to explain
+
+really quickly is that if Alice if
+
+Alice's pre havior is predictable
+
+there's some there's an active
+
+confirmation attack so if if she
+
+retrieves a message from this provider
+
+of this rendezvous provider on the
+
+network and it's compromised then the
+
+adversary could make an outage on the
+
+network so that the reply might not ever
+
+get to Alice and so if Alice then sends
+
+the reply again it might use the same
+
+sequence number or so and so the
+
+adversary just had a positive
+
+confirmation that Alice is on a certain
+
+half of the network right because
+
+they've created an outage for half of
+
+the nodes that can receive the reply so
+
+the adversary gets to learn which half
+
+she's on and so if you have some
+
+background in computer science you can
+
+easily see this is this attack would
+
+happen in logarithmic time that's
+
+basically like a binary tree search and
+
+so instead we want to randomize the
+
+retransmission delay this might create
+
+usability problems but we can't have
+
+client behavior predictable and so
+
+captain post internally it's a series of
+
+queues connected in a pipeline but
+
+providers can have services and we have
+
+a plugin system so you can have services
+
+to the network so we really want to
+
+integrate collaborate with other
+
+developers and and academics as well and
+
+if developers would be interested in
+
+creating new messaging systems we
+
+support that we have messaging systems
+
+that are usable now on cats and
+
+post-book we also want to support making
+
+new messaging systems so so it could
+
+also be used to try to transmit
+
+cryptocurrency transactions
+
+obviously because that's just a message
+
+and so on yeah the author of flip ik
+
+solver a paper about it and we you would
+
+want other people transmitting their
+
+cryptocurrency transactions you want to
+
+hide it in a crowd of other people doing
+
+the same thing
+
+seeing other services on the same
+
+network wouldn't really create this
+
+end-to-end
+
+unlink ability property you want you're
+
+only really being mixed with the other
+
+people in the network so you might be
+
+thinking why does e-cash need this isn't
+
+it already anonymous and z cache the
+
+anonymity that it provides keeps you
+
+from linking transactions together but
+
+it doesn't provide the sender
+
+unobservable T and that's what the the
+
+mix net can provide so Z cache sort of
+
+like like many things could potentially
+
+have a statistical disclosure attacks
+
+against it where you see when somebody
+
+sends a message and that's a useful
+
+piece of information and with a if
+
+you're a mix net Z cache client people
+
+can see that you're connected to the
+
+network but they couldn't see if you're
+
+sending right now okay so what's next if
+
+I think maybe we need to skip some of
+
+these slides if we want to have time for
+
+questions or no okay right yeah we these
+
+slides are a bit too much detail but
+
+after them I have some paper
+
+recommendations hold on let's just skip
+
+all these things you don't need it the
+
+moral character of cryptographic works
+
+by full of rogue away is a really
+
+excellent essay and a we want other
+
+Kotaku furs and computer scientists and
+
+people like that to think more about
+
+helping society and not just for during
+
+their academic careers and and
+
+publishing papers that have no meaning
+
+so we'd like cryptographers to to
+
+collaborate with us and with other
+
+computer scientists and do practical
+
+things that would affect society
+
+positively he mentions charm 81 chomps
+
+1981 mix net paper 13 times in this in
+
+in in this paper and it's really what
+
+he's trying to point out is that we
+
+should really think about protecting
+
+metadata that's leaked right
+
+cryptographers focus too much on
+
+confidentiality or on these zero
+
+knowledge proof systems or whatever
+
+fancy thing they're working on but they
+
+don't focus enough on protecting the
+
+metadata that are leaking I also wanted
+
+to mention the authors of the anonymity
+
+trilemma paper
+
+a technical report which is published on
+
+their website and it is called beyond
+
+mixed nets and it talks about hybrid
+
+networks that they're pretty interesting
+
+have some interesting performance
+
+security properties that seem to be
+
+slightly better than mixed networks you
+
+can enhance a mix network using a hybrid
+
+network scheme by adding secret sharing
+
+offline secret sharing and I think this
+
+paper is pretty cool privacy notions
+
+it's pretty interesting it talks about
+
+threat models for anonymous
+
+communication networks and what what
+
+privacy notions do you expect from these
+
+systems and how exactly to to articulate
+
+that so that's our talk is there any
+
+questions um before questions I'll
+
+answer a couple questions I anticipate
+
+is what's the state of the project today
+
+Captain post David and other people have
+
+done a lot of work on it there's code
+
+you can run there's a test network that
+
+is run by David so it's not providing
+
+real anonymity properties it's not a
+
+thing you should start using today
+
+unless you want to pack on it and play
+
+with it there's a simple text-based
+
+client there's a lot of work left to do
+
+but it's being very actively developed
+
+another frequent question is what is
+
+this delay there's lower latency but
+
+still not as low as tor it's it's not
+
+low enough to type in as is HL or
+
+something but I think David really
+
+doesn't like to answer that question
+
+because it has to be tuned and there's a
+
+lot of decisions to make about how low
+
+the latency should be but I think we
+
+could say on on the order of seconds not
+
+minutes
+
+is what we're anticipating is gonna be
+
+reasonable the other question I
+
+frequently get is about censorships or
+
+convention and yeah our software works
+
+of Tor onion services and you can use it
+
+with tor and use pluggable transports
+
+towards got that stuff covered already
+
+thank you for this super interesting job
+
+we do have the some more minutes for
+
+questions so there are one microphone
+
+angel up in the front if you'd like to
+
+ask a question which I would like you to
+
+do then please serve up to this lovely
+
+gentleman and get talking to his
+
+microphone and in the meantime while you
+
+do that is there a question from the
+
+internet
+
+do you signal angel do you have anything
+
+for us there seems to be not the case
+
+therefore please go ahead with your
+
+question sure you started by saying that
+
+tors threat model is not for a global
+
+passive adversary and it seems that the
+
+threat model that captain post and mixed
+
+Nets have does cover that and perhaps go
+
+stronger because you talk about
+
+compulsion attacks but maybe does not go
+
+to what we might say is fully a global
+
+active adversary can you surf draw the
+
+line of what you think your threat model
+
+Jesus and that boundary so first of all
+
+in the captain post model the receiving
+
+side of messages is a provider so if you
+
+wanted to do a statistical disclosure
+
+attack with a high amount of statistical
+
+information being leaked it's helpful to
+
+compromise the provider so you can see
+
+which message Q receives messages the
+
+other active attack for make sense that
+
+can think of it's like an n minus one
+
+attack where you're attacking the mixed
+
+strategy and we have some partial
+
+defenses against that but it's kind of
+
+still in it's not a full defense one
+
+aspect of the Lumix design is that the
+
+individual mixes are sending loops and
+
+so they could potentially detect if
+
+there's an N minus 1 attack happening if
+
+messages they send through a certain
+
+relay aren't actually ever making it
+
+back to them they can they can see that
+
+that's happening and what to do about
+
+that is well kind of an open question
+
+but the the PKI operators the the people
+
+the equivalent of tor directory
+
+authorities could have some policy
+
+decisions to to say we're not going to
+
+use that relay anymore because there is
+
+P is facilitating a some sort of attack
+
+yeah I think the
+
+the compulsion attack is the other
+
+active attack right so mixed networks we
+
+still get to have these security
+
+properties if we even if we only have
+
+one honest hop in our route so that's a
+
+kind of defense by design so to speak
+
+please go ahead that's just a quick
+
+remark about the fit models that threat
+
+models can't be like put in strictly
+
+stronger and strictly well weaker which
+
+was kind of the question before right
+
+I think if there's anything up but maybe
+
+David can say something about that about
+
+stronger versus weaker threat models
+
+happy also about compulsion attacks that
+
+Taurus better against okay it's almost
+
+an unfair comparison because tor is
+
+easily broken by a much weaker
+
+adversaries and all these other attacks
+
+it is true it's stronger just for
+
+compulsion attacks but I think for mixed
+
+Nets since we can have partial
+
+mitigation we can make the the window of
+
+time very small in which the adversary
+
+can actually compromise the the key
+
+material and you make use of it so and
+
+you know another defense against that is
+
+we can put our mixes in different
+
+continents and different countries
+
+around the world make the mans really JA
+
+make the man's job really hard right to
+
+trace your your path through the network
+
+but I think that actually at that point
+
+really does kind of illustrate that you
+
+can't always say that threat models are
+
+necessarily stronger or weaker than one
+
+another there can be better or worse in
+
+different different dimensions yes
+
+please one more question from the
+
+audience microphone or a remark and just
+
+to say because the global passive
+
+addressed adversary there was also some
+
+question about that I mean you can the
+
+active one usually can inject and delay
+
+and stuff like that because you didn't
+
+quite get on that one
+
+a lot for your remarks David would you
+
+like to I mean we've pretty much covered
+
+the active adversary when we talk about
+
+n minus-1 attacks and and compulsion
+
+attacks I mean there's some other
+
+attacks that can be done I mean
+
+certainly we don't have a defense
+
+against denial of service and things
+
+like that we have partial defense but
+
+yeah is there another question yeah
+
+I am wondering what's your opinion on
+
+speed and scalability because in my
+
+opinion one of the major drawbacks of
+
+something like toys that it's just used
+
+to slow to use it on a daily basis and
+
+it would be much more secure if
+
+everybody could use it on a daily basis
+
+without having in such drawbacks okay
+
+well that makes me think of a lot of
+
+different things to respond with one of
+
+them is that mixed networks tend to not
+
+be super low latency than to be maybe
+
+medium latency some of the historical
+
+designs are high latency like Leif
+
+mentioned but we think that mixed
+
+networks are very efficient for scaling
+
+up much more than tor in this sense that
+
+we don't need lots of nodes in our
+
+network to scale right we don't need
+
+lots of route unpredictability right we
+
+just need enough nodes to handle the
+
+traffic capacity and currently we have
+
+two public key operations per Sphynx
+
+packet and I mean there's some
+
+computational overhead but it's it's
+
+manageable so I think I think mixing
+
+would scale very well probably to
+
+millions of users and for a different
+
+type of application rights it's probably
+
+not going to be video conferencing it's
+
+probably gonna be lower bandwidth
+
+applications maybe maybe high bandwidth
+
+applications would work over longer
+
+periods of time this is not a thing that
+
+you're going to browse the web over in
+
+real time exactly you could use this as
+
+a transport for downloading web content
+
+you could have a and that's something
+
+that various people are considering but
+
+the it's it's not a replacement for tor
+
+which is ultimately gives you TCP
+
+connections where you expect to have a
+
+pretty low latency
+
+another interesting side note is that
+
+tour has exit notes and generally
+
+speaking mixed networks don't have exit
+
+notes to the rest of the internet we
+
+could have services that the edge of
+
+network that perhaps go and retrieve
+
+something for you like maybe some web
+
+content or you could have offline
+
+browser that do browse the web the way
+
+Richard Stallman does where you send an
+
+email to a process named replies with a
+
+snapshot you know yeah so yeah we get to
+
+control the entire network if we and we
+
+can put decoy traffic everywhere if we
+
+don't exit right so it's one of the
+
+advantages thank you for this in
+
+detailed response do we now have a
+
+question from the internet that is not
+
+the case so please give a warm round of
+
+applause for this very interesting to
+
+talk to David and lead
+
+[Music]
+
+[Music]
+
+you
