@@ -68,5 +68,7 @@ The pipeline creates the following resources in your `/dist` output folder:
 
 1. Uses `yt-dlp` to download the auto-generated English transcript as an `.srt` file.
 2. Cleans text and shapes it for the Diarizer.
-3. Sends chunks sequentially through the 4-agent Gemini Pipeline to ensure Zero-Loss structural conversion.
-4. Outputs the cohesively synthesized content to `/dist` in Markdown.
+3. The Cleaner agent receives the json labeled response from the Diarizer agent.
+4. The Architect Agent takes the Cleaner output and makes structural "Blueprint" with titles and detailed summary of the points for each section.
+5. The Writer Agent uses the structural blueprint from the Architect together with the whole content from the Cleaner to create an article.
+6. Outputs the cohesively synthesized content to `/dist` in Markdown.
