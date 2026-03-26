@@ -1,6 +1,6 @@
-import { spawn } from 'child_process';
-import * as path from 'path';
-import * as fs from 'fs';
+import { spawn } from 'node:child_process';
+import * as path from 'node:path';
+import * as fs from 'node:fs';
 
 export async function downloadTranscript(url: string, outputDir: string = process.cwd()): Promise<string> {
     return new Promise((resolve, reject) => {
@@ -17,7 +17,6 @@ export async function downloadTranscript(url: string, outputDir: string = proces
             '--skip-download',
             '--write-auto-sub',
             '--sub-lang', 'en',
-            '--sub-format', 'vtt',
             '--convert-subs', 'srt',
             '-o', outTmpl,
             url
