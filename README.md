@@ -1,6 +1,19 @@
 # YouTube TechTalk-to-Article MVP
 
-This application converts YouTube technical presentations into high-quality, unified Markdown articles using Google's Gemini 1.5 Flash.
+This application converts YouTube technical presentations into high-quality, unified Markdown articles using Google's Gemini models.
+
+## Architecture
+
+```mermaid
+graph TD;
+    A[YouTube URL] --> B(yt-dlp Downloader)
+    B -->|Generates .srt| C{Text Cleaner}
+    C -->|Double line breaks| D[Agent 1: Diarizer]
+    D -->|JSON Speaker Tags| E[Agent 2: Semantic Cleaner]
+    E -->|Polished JSON| F[Agent 3: Architect]
+    F -->|Blueprint JSON| G[Agent 4: Narrative Writer]
+    G -->|Iterative Chunking| H(Final Markdown Article)
+```
 
 ## Prerequisites
 
@@ -26,15 +39,34 @@ This application converts YouTube technical presentations into high-quality, uni
 
 ## Usage
 
-Run the tool with a YouTube URL as an argument:
+Run the tool with a YouTube URL as an argument, and an optional second argument for the output filename:
 
 ```bash
-npm start "https://www.youtube.com/watch?v=YOUR_VIDEO_ID"
+npm start <YouTube URL> [optional_output_name]
 ```
 
-The script will:
+### Example
 
-1. Use `yt-dlp` to download the auto-generated English transcript as a `.vtt` file.
-2. Read the transcript content.
-3. Send it to Gemini 1.5 Flash to automatically clean timestamps, perform speaker diarization (if applicable), and format it into a cohesive Markdown article.
-4. Save the generated content to `article.md` in the current directory.
+Here is a full example of converting a technical presentation on Mixnets:
+
+```bash
+npm start https://youtu.be/j3AUC0x_ju8 intro-mixnets-katzenpost
+```
+
+#### Original Video
+
+[![Katzenpost Mixnets](https://img.youtube.com/vi/j3AUC0x_ju8/0.jpg)](https://youtu.be/j3AUC0x_ju8)
+
+#### Output Files
+
+The pipeline creates the following resources in your `/dist` output folder:
+
+- **Cleaned Transcript:** `dist/intro-mixnets-katzenpost_cleaned.txt`
+- **Final Article Output:** [`dist/intro-mixnets-katzenpost.md`](dist/intro-mixnets-katzenpost.md)
+
+### How it Works
+
+1. Uses `yt-dlp` to download the auto-generated English transcript as an `.srt` file.
+2. Cleans text and shapes it for the Diarizer.
+3. Sends chunks sequentially through the 4-agent Gemini Pipeline to ensure Zero-Loss structural conversion.
+4. Outputs the cohesively synthesized content to `/dist` in Markdown.

@@ -2,11 +2,11 @@ import { spawn } from 'node:child_process';
 import * as path from 'node:path';
 import * as fs from 'node:fs';
 
-export async function downloadTranscript(url: string, outputDir: string = process.cwd()): Promise<string> {
+export async function downloadTranscript(url: string, outputDir: string = process.cwd(), baseName: string = 'transcript'): Promise<string> {
     return new Promise((resolve, reject) => {
         // Output template for yt-dlp
-        const outTmpl = path.join(outputDir, 'transcript');
-        const expectedFile = path.join(outputDir, 'transcript.en.srt');
+        const outTmpl = path.join(outputDir, baseName);
+        const expectedFile = path.join(outputDir, `${baseName}.en.srt`);
 
         // Clean up previous file if it exists
         if (fs.existsSync(expectedFile)) {
