@@ -1,4 +1,4 @@
-# YouTube TechTalk-to-Article MVP
+# YouTube TechTalk-to-Article
 
 This application converts YouTube technical presentations into high-quality, unified Markdown articles using Google's Gemini models.
 
@@ -72,3 +72,7 @@ The pipeline creates the following resources in your `/dist` output folder:
 4. The Architect Agent takes the Cleaner output and makes structural "Blueprint" with titles and detailed summary of the points for each section.
 5. The Writer Agent uses the structural blueprint from the Architect together with the whole content from the Cleaner to create an article.
 6. Outputs the cohesively synthesized content to `/dist` in Markdown.
+
+
+### Next 
+Video frame change recognition and OCR patterns in order to recreate and embed the graphic assets in the markdown files.
