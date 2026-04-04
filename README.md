@@ -1,78 +1,74 @@
-# YouTube TechTalk-to-Article
+# 🎥 YouTube TechTalk-to-Article
 
-This application converts YouTube technical presentations into high-quality, unified Markdown articles using Google's Gemini models.
+Transform YouTube technical presentations into premium, structured Markdown articles using Google's Gemini models. This tool uses a multi-agent pipeline to ensure technical accuracy, speaker attribution, and professional narrative flow.
 
-## Architecture
+## 🏗️ Architecture
 
 ```mermaid
 graph TD;
-    A[YouTube URL] --> B(yt-dlp Downloader)
-    B -->|Generates .srt| C{Text Cleaner}
-    C -->|Double line breaks| D[Agent 1: Diarizer]
-    D -->|JSON Speaker Tags| E[Agent 2: Semantic Cleaner]
-    E -->|Polished JSON| F[Agent 3: Architect]
-    F -->|Blueprint JSON| G[Agent 4: Narrative Writer]
-    G -->|Iterative Chunking| H(Final Markdown Article)
+    A[YouTube URL] -->|yt-dlp| B(.srt Transcript)
+    B --> C(Pre-processing)
+    C -->|Cleaned Text| D[Agent 1: Diarizer]
+    D -->|JSON Speaker Tags| E[Agent 2: Cleaner]
+    E -->|Polished Content| F[Agent 3: Architect]
+    F -->|Structural Blueprint| G[Agent 4: Writer]
+    E -.->|Full Context| G
+    G --> H(Final Markdown Article)
 ```
 
-## Prerequisites
+## 🛠️ Prerequisites
 
-1. **Node.js** installed on your machine.
-2. **`yt-dlp`** installed and available in your system's PATH. ([Installation guide](https://github.com/yt-dlp/yt-dlp/wiki/Installation))
-3. **`ffmpeg`** installed and available in your system's PATH (required for subtitle conversion to SRT). ([Installation guide](https://ffmpeg.org/download.html))
-4. **Google Gemini API Key**: Get one from [Google AI Studio](https://aistudio.google.com/).
+- **Node.js** (v18+)
+- **[yt-dlp](https://github.com/yt-dlp/yt-dlp/wiki/Installation)** (Available in PATH)
+- **[FFmpeg](https://ffmpeg.org/download.html)** (Required for subtitle conversion)
+- **Google Gemini API Key** ([Get one here](https://aistudio.google.com/))
 
-## Setup
+## 🚀 Quick Start
 
-1. Clone or navigate to this repository.
-2. Install dependencies:
+1. **Clone & Install:**
 
    ```bash
+   git clone https://github.com/idshdx/Youtube2Article.git
+   cd Youtube2Article
    npm install
    ```
 
-3. Create a `.env` file in the root directory and add your API key:
+2. **Configure:**
+
+   Create a `.env` file:
 
    ```env
-   GEMINI_API_KEY=your_actual_api_key_here
+   GEMINI_API_KEY=your_api_key_here
    ```
 
-## Usage
+3. **Run:**
 
-Run the tool with a YouTube URL as an argument, and an optional second argument for the output filename:
-
-```bash
-npm start <YouTube URL> [optional_output_name]
-```
+   ```bash
+   npm start <YouTube URL> [output_name]
+   ```
 
 ### Example
 
-Here is a full example of converting a technical presentation on Mixnets:
-
 ```bash
-npm start https://youtu.be/j3AUC0x_ju8 intro-mixnets-katzenpost
+npm start https://youtu.be/j3AUC0x_ju8 intro-mixnets
+
 ```
 
-#### Original Video
+## 📦 Pipeline Output
 
-[![Katzenpost Mixnets](https://img.youtube.com/vi/j3AUC0x_ju8/0.jpg)](https://youtu.be/j3AUC0x_ju8)
+The process generates resources in the `/dist` folder:
 
-#### Output Files
+- **`*_cleaned.txt`**: The polished, diarized transcript.
+- **`*.md`**: The final high-quality technical article.
 
-The pipeline creates the following resources in your `/dist` output folder:
+## 🧠 How it Works
 
-- **Cleaned Transcript:** `dist/intro-mixnets-katzenpost_cleaned.txt`
-- **Final Article Output:** [`dist/intro-mixnets-katzenpost.md`](dist/intro-mixnets-katzenpost.md)
+1. **Extraction:** Uses `yt-dlp` to fetch the auto-generated English transcript as an `.srt` file.
+2. **Pre-processing:** Cleans the raw SRT formatting and shapes the text for the pipeline.
+3. **Diarization:** The **Diarizer Agent** identifies speaker changes and labels segments (Host, Speaker, Audience).
+4. **Refinement:** The **Cleaner Agent** receives the JSON response, removes verbal fillers, and performs rolling deduplication of auto-caption errors.
+5. **Architecting:** The **Architect Agent** analyzes the polished text to create a structural "Blueprint" with section titles and detailed summaries.
+6. **Synthesis:** The **Writer Agent** uses the Architect's blueprint alongside the full Cleaner output to synthesize a cohesive, authoritative technical article.
 
-### How it Works
-
-1. Uses `yt-dlp` to download the auto-generated English transcript as an `.srt` file.
-2. Cleans text and shapes it for the Diarizer.
-3. The Cleaner agent receives the json labeled response from the Diarizer agent.
-4. The Architect Agent takes the Cleaner output and makes structural "Blueprint" with titles and detailed summary of the points for each section.
-5. The Writer Agent uses the structural blueprint from the Architect together with the whole content from the Cleaner to create an article.
-6. Outputs the cohesively synthesized content to `/dist` in Markdown.
-
-
-### Next 
-Video frame change recognition and OCR patterns in order to recreate and embed the graphic assets in the markdown files.
+---
+*Next: Video frame change recognition and OCR patterns for automatic graphic asset embedding.*
