@@ -1,6 +1,6 @@
 # 🎥 YouTube TechTalk-to-Article
 
-Transform YouTube technical presentations into premium, structured Markdown articles using Google's Gemini models. This tool uses a multi-agent pipeline to ensure technical accuracy, speaker attribution, and professional narrative flow.
+Transform YouTube technical presentations into premium, structured Markdown articles using AI models. This tool uses a multi-agent pipeline to ensure technical accuracy, speaker attribution, and professional narrative flow.
 
 ## 🏗️ Architecture
 
@@ -19,9 +19,9 @@ graph TD;
 ## 🛠️ Prerequisites
 
 - **Node.js** (v18+)
-- **[yt-dlp](https://github.com/yt-dlp/yt-dlp/wiki/Installation)** (Available in PATH)
-- **[FFmpeg](https://ffmpeg.org/download.html)** (Required for subtitle conversion)
-- **Google Gemini API Key** ([Get one here](https://aistudio.google.com/))
+- **`yt-dlp`** installed and available in your system's PATH. ([Installation guide](https://github.com/yt-dlp/yt-dlp/wiki/Installation))
+-  **`ffmpeg`** (required for subtitle conversion to SRT). ([Installation guide](https://ffmpeg.org/download.html))
+- I used Google Gemini but any model works. **Google Gemini API Key** ([Get one here](https://aistudio.google.com/))
 
 ## 🚀 Quick Start
 
@@ -44,22 +44,27 @@ graph TD;
 3. **Run:**
 
    ```bash
-   npm start <YouTube URL> [output_name]
+   npm start <YouTube URL> [optional_output_name]
    ```
 
 ### Example
 
-```bash
-npm start https://youtu.be/j3AUC0x_ju8 intro-mixnets
+Here is a full example of converting a technical presentation on Mixnets:
 
+```bash
+npm start https://youtu.be/j3AUC0x_ju8 intro-mixnets-katzenpost
 ```
 
-## 📦 Pipeline Output
+#### Original Video
 
-The process generates resources in the `/dist` folder:
+[![Katzenpost Mixnets](https://img.youtube.com/vi/j3AUC0x_ju8/0.jpg)](https://youtu.be/j3AUC0x_ju8)
 
-- **`*_cleaned.txt`**: The polished, diarized transcript.
-- **`*.md`**: The final high-quality technical article.
+#### Output Files
+
+The pipeline creates the following resources in your `/dist` output folder:
+
+-  **`*_cleaned.txt`**: The polished, diarized transcript. **example cleaned transcript:** `dist/intro-mixnets-katzenpost_cleaned.txt`
+- **`*.md`**: The final high-quality technical article. **example Article Output:** [`dist/intro-mixnets-katzenpost.md`](dist/intro-mixnets-katzenpost.md)
 
 ## 🧠 How it Works
 
